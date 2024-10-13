@@ -537,6 +537,16 @@ function Property:DeleteProperty(data)
         end
     end)
 
+    local doorPrefix = ('ps_mloproperty%s_'):format(propertyid)
+
+    MySQL.Async.execute("DELETE FROM ox_doorlock WHERE name LIKE @doorPrefix", {
+        ["@doorPrefix"] = doorPrefix .. '%'
+    }, function (rowsChanged)
+        if rowsChanged > 0 then
+            Debug("Deleted doorlock entries for property with id: " .. propertyid)
+        end
+    end)
+
     TriggerClientEvent("ps-housing:client:removeProperty", -1, propertyid)
 
     Framework[Config.Notify].Notify(realtorSrc, "Property with id: " .. propertyid .." has been removed.", "info")

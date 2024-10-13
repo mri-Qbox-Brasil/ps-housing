@@ -35,6 +35,7 @@ server_script {
   "server/sv_property.lua",
   "server/server.lua",
   "server/migrate.lua",
+  "server/db.lua"
 }
 
 files {
