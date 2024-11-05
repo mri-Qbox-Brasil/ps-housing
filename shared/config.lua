@@ -174,7 +174,7 @@ Config.Shells = {
         },
         imgs = {
             {
-                url = "https://files.fivemerr.com/images/fb1f1038-2b38-4cee-b031-e0bca4c108ed.webp",
+                url = "https://files.fivemerr.com/images/3aceba45-9201-46c0-a041-2acccb5d0f9d.png",
                 label = "Motel",
             },
         }
@@ -189,7 +189,7 @@ Config.Shells = {
         },
         imgs = {
             {
-                url = "https://files.fivemerr.com/images/fb1f1038-2b38-4cee-b031-e0bca4c108ed.webp",
+                url = "https://files.fivemerr.com/images/57411dde-126f-437a-a261-a1b464718067.png",
                 label = "Motel",
             },
         }
@@ -204,7 +204,7 @@ Config.Shells = {
         },
         imgs = {
             {
-                url = "https://files.fivemerr.com/images/fb1f1038-2b38-4cee-b031-e0bca4c108ed.webp",
+                url = "https://files.fivemerr.com/images/e993d749-bcc2-4d42-a891-4f557ad24928.png",
                 label = "Motel",
             },
         }
@@ -219,7 +219,7 @@ Config.Shells = {
         },
         imgs = {
             {
-                url = "https://files.fivemerr.com/images/fb1f1038-2b38-4cee-b031-e0bca4c108ed.webp",
+                url = "https://files.fivemerr.com/images/a3a293d6-74f4-4fc7-90de-641af9c515ad.png",
                 label = "Motel",
             },
         }
@@ -234,7 +234,7 @@ Config.Shells = {
         },
         imgs = {
             {
-                url = "https://files.fivemerr.com/images/fb1f1038-2b38-4cee-b031-e0bca4c108ed.webp",
+                url = "https://files.fivemerr.com/images/6e825ff9-aed5-4f4c-9419-444a4889ceaa.png   ",
                 label = "Motel",
             },
         }
@@ -249,7 +249,7 @@ Config.Shells = {
         },
         imgs = {
             {
-                url = "https://files.fivemerr.com/images/fb1f1038-2b38-4cee-b031-e0bca4c108ed.webp",
+                url = "https://files.fivemerr.com/images/cd3603f1-b433-4a9c-bb4d-325893f13a1f.png",
                 label = "Motel",
             },
         }
@@ -264,7 +264,7 @@ Config.Shells = {
         },
         imgs = {
             {
-                url = "https://files.fivemerr.com/images/fb1f1038-2b38-4cee-b031-e0bca4c108ed.webp",
+                url = "https://files.fivemerr.com/images/3dd75c62-cdf0-4b26-aa5e-db2e4a7c0196.png",
                 label = "Motel",
             },
         }
@@ -279,7 +279,7 @@ Config.Shells = {
         },
         imgs = {
             {
-                url = "https://files.fivemerr.com/images/fb1f1038-2b38-4cee-b031-e0bca4c108ed.webp",
+                url = "https://files.fivemerr.com/images/0248324d-7106-4be2-b3cb-9f74bbde59f2.png",
                 label = "Motel",
             },
         }
@@ -294,7 +294,7 @@ Config.Shells = {
         },
         imgs = {
             {
-                url = "https://files.fivemerr.com/images/fb1f1038-2b38-4cee-b031-e0bca4c108ed.webp",
+                url = "https://files.fivemerr.com/images/e320c2c6-fc22-4d35-a228-26f0c6b93343.png",
                 label = "Motel",
             },
         }
@@ -309,7 +309,7 @@ Config.Shells = {
         },
         imgs = {
             {
-                url = "https://files.fivemerr.com/images/fb1f1038-2b38-4cee-b031-e0bca4c108ed.webp",
+                url = "https://files.fivemerr.com/images/7719b446-0c41-4309-afe8-88f7e2618977.png",
                 label = "Motel",
             },
         }
@@ -324,7 +324,7 @@ Config.Shells = {
         },
         imgs = {
             {
-                url = "https://files.fivemerr.com/images/fb1f1038-2b38-4cee-b031-e0bca4c108ed.webp",
+                url = "https://files.fivemerr.com/images/193cd9f8-f2e2-424b-b8cd-b10223a7d390.png",
                 label = "Motel",
             },
         }
@@ -339,7 +339,52 @@ Config.Shells = {
         },
         imgs = {
             {
-                url = "https://files.fivemerr.com/images/fb1f1038-2b38-4cee-b031-e0bca4c108ed.webp",
+                url = "https://files.fivemerr.com/images/7e812446-2b65-4e4c-afbf-f8ed76559af8.png",
+                label = "Motel",
+            },
+        }
+    },
+    ["Casa favela 01"] = {
+        label = "Casa favela 01",
+        hash = `gg_shell_13`,
+        doorOffset = { x = 0.0, y = 0.0, z = 0.0, h = 0.0, width = 1.5 },
+        stash = {
+            maxweight = 100000,
+            slots = 12,
+        },
+        imgs = {
+            {
+                url = "https://files.fivemerr.com/images/7fc14392-7048-4493-91b9-9c22e6bbb0b1.png",
+                label = "Motel",
+            },
+        }
+    },
+    ["Casa favela 02"] = {
+        label = "Casa favela 02",
+        hash = `gg_shell_14`,
+        doorOffset = { x = 0.0, y = 0.0, z = 0.0, h = 0.0, width = 1.5 },
+        stash = {
+            maxweight = 100000,
+            slots = 12,
+        },
+        imgs = {
+            {
+                url = "https://files.fivemerr.com/images/40a9cd68-3a1a-49d3-9479-02b438f20228.png",
+                label = "Motel",
+            },
+        }
+    },
+    ["Cabana 01"] = {
+        label = "Cabana 01",
+        hash = `gg_shell_15`,
+        doorOffset = { x = 0.0, y = 0.0, z = 0.0, h = 0.0, width = 1.5 },
+        stash = {
+            maxweight = 100000,
+            slots = 12,
+        },
+        imgs = {
+            {
+                url = "https://files.fivemerr.com/images/87d2e753-fc37-43c6-8544-fb3e9bdd2727.png",
                 label = "Motel",
             },
         }
