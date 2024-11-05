@@ -422,8 +422,8 @@ Config.Furnitures = {
     {
         category = "Pré-requisitos",
         items = {
-            { ["object"] = "v_res_tre_storagebox", ["price"] = 0, ["label"] = "Storage Unit", ["type"] = "Baú", ["max"] = 2 },
-            { ["object"] = "v_res_tre_wardrobe", ["price"] = 0, ["label"] = "Wardrobe", ["type"] = "Guarda-Roupas", ["max"] = 2 },
+            { ["object"] = "v_res_tre_storagebox", ["price"] = 0, ["label"] = "Baú", ["type"] = "storage", ["max"] = 2 },
+            { ["object"] = "v_res_tre_wardrobe", ["price"] = 0, ["label"] = "Guarda-Roupas", ["type"] = "clothing", ["max"] = 2 },
         }
     },
 
