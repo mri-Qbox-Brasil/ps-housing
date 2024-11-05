@@ -162,7 +162,7 @@ Config.Apartments = {
     },
 }
 
--- Shells provided by GORDELA
+-- Shells provided by Gordela store https://gordela-store.tebex.io/package/6493356
 Config.Shells = {
     ["Casa Média 01"] = {
         label = "Casa Média 01",
