@@ -51,12 +51,12 @@ function Apartment:EnterApartment()
         end
     end
 
-    Framework[Config.Notify].Notify("You dont have an apartment here.", "error")
+    Framework[Config.Notify].Notify("Você não tem um apartamento aqui.", "error")
 end
 
 function Apartment:GetMenuForAll()
     if next(self.apartments) == nil then 
-        Framework[Config.Notify].Notify("There are no apartments here.", "error")
+        Framework[Config.Notify].Notify("Não há apartamentos aqui.", "error")
         return
     end
 
@@ -82,7 +82,7 @@ end
 
 function Apartment:GetMenuForAllToRaid()
     if next(self.apartments) == nil then 
-        Framework[Config.Notify].Notify("There are no apartments here.", "error")
+        Framework[Config.Notify].Notify("Não há apartamentos aqui.", "error")
         return
     end
 

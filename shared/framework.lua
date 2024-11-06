@@ -81,7 +81,7 @@ Framework.qb = {
             {
                 options = {
                     {
-                        label = "Enter Property",
+                        label = "Entrar",
                         icon = "fas fa-door-open",
                         action = enter,
                         canInteract = function()
@@ -90,7 +90,7 @@ Framework.qb = {
                         end,
                     },
                     {
-                        label = "Showcase Property",
+                        label = "Conhecer",
                         icon = "fas fa-eye",
                         action = showcase,
                         canInteract = function()
@@ -101,7 +101,7 @@ Framework.qb = {
                         end,
                     },
                     {
-                        label = "Property Info",
+                        label = "Informações do imovel",
                         icon = "fas fa-circle-info",
                         action = showData,
                         canInteract = function()
@@ -196,12 +196,12 @@ Framework.qb = {
             {
                 options = {
                     {
-                        label = "Leave Property",
+                        label = "Sair",
                         action = leave,
                         icon = "fas fa-right-from-bracket",
                     },
                     {
-                        label = "Check Door",
+                        label = "Campainha",
                         action = checkDoor,
                         icon = "fas fa-bell",
                     },
@@ -312,7 +312,7 @@ Framework.ox = {
             debug = Config.DebugMode,
             options = {
                 {
-                    label = "Enter Property",
+                    label = "Entrar",
                     icon = "fas fa-door-open",
                     onSelect = enter,
                     canInteract = function()
@@ -321,7 +321,7 @@ Framework.ox = {
                     end,
                 },
                 {
-                    label = "Showcase Property",
+                    label = "Conhecer",
                     icon = "fas fa-eye",
                     onSelect = showcase,
                     canInteract = function()
@@ -335,7 +335,7 @@ Framework.ox = {
                     end,
                 },
                 {
-                    label = "Property Info",
+                    label = "Informações do imovel",
                     icon = "fas fa-circle-info",
                     onSelect = showData,
                     canInteract = function()
@@ -422,13 +422,13 @@ Framework.ox = {
             options = {
                 {
                     name = "leave",
-                    label = "Leave Property",
+                    label = "Sair",
                     onSelect = leave,
                     icon = "fas fa-right-from-bracket",
                 },
                 {
                     name = "doorbell",
-                    label = "Check Door",
+                    label = "Campainha",
                     onSelect = checkDoor,
                     icon = "fas fa-bell",
                 },

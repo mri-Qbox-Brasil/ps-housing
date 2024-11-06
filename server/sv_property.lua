@@ -104,16 +104,16 @@ function Property:AddToDoorbellPoolTemp(src)
     for src, _ in pairs(self.playersInside) do
         local targetSrc = tonumber(src)
 
-        Framework[Config.Notify].Notify(targetSrc, "Someone is at the door.", "info")
+        Framework[Config.Notify].Notify(targetSrc, "Alguém está na porta.", "info")
         TriggerClientEvent("ps-housing:client:updateDoorbellPool", targetSrc, self.property_id, self.playersDoorbell)
     end
 
-    Framework[Config.Notify].Notify(src, "You rang the doorbell. Just wait...", "info")
+    Framework[Config.Notify].Notify(src, "Você tocou a campainha. Aguarde...", "info")
 
     SetTimeout(10000, function()
         if self.playersDoorbell[_src] then
             self.playersDoorbell[_src] = nil
-            Framework[Config.Notify].Notify(src, "No one answered the door.", "error")
+            Framework[Config.Notify].Notify(src, "Ninguém atendeu a porta.", "error")
         end
 
         for src, _ in pairs(self.playersInside) do
@@ -143,7 +143,7 @@ function Property:StartRaid()
 
     for src, _ in pairs(self.playersInside) do
         local targetSrc = tonumber(src)
-        Framework[Config.Notify].Notify(targetSrc, "This Property is being Raided.", "error")
+        Framework[Config.Notify].Notify(targetSrc, "Esta propriedade está sendo invadida.", "error")
     end
 
     SetTimeout(Config.RaidTimer * 60000, function()
@@ -331,12 +331,12 @@ function Property:UpdateOwner(data)
 
     self:addMloDoorsAccess(citizenid)
     if self.propertyData.shell == 'mlo' and DoorResource == 'qb' then
-        Framework[Config.Notify].Notify(targetSrc, "Go far away and come back for the door to update and open/close.", "error")
+        Framework[Config.Notify].Notify(targetSrc, "Afaste-se e volte para que a porta seja atualizada e abra/feche.", "error")
     end
 
     if self.propertyData.owner == citizenid then
-        Framework[Config.Notify].Notify(targetSrc, "You already own this property", "error")
-        Framework[Config.Notify].Notify(realtorSrc, "Client already owns this property", "error")
+        Framework[Config.Notify].Notify(targetSrc, "Você já é o proprietário desta propriedade.", "error")
+        Framework[Config.Notify].Notify(realtorSrc, "O cliente já é proprietário desta propriedade.", "error")
         return
     end
 
@@ -344,14 +344,14 @@ function Property:UpdateOwner(data)
     local targetAllow = lib.callback.await("ps-housing:cb:confirmPurchase", targetSrc, self.propertyData.price, self.propertyData.street, self.propertyData.property_id)
 
     if targetAllow ~= "confirm" then
-        Framework[Config.Notify].Notify(targetSrc, "You did not confirm the purchase", "info")
-        Framework[Config.Notify].Notify(realtorSrc, "Client did not confirm the purchase", "error")
+        Framework[Config.Notify].Notify(targetSrc, "Você não confirmou a compra.", "info")
+        Framework[Config.Notify].Notify(realtorSrc, "O cliente não confirmou a compra.", "error")
         return
     end
 
     if bank < self.propertyData.price then
-                Framework[Config.Notify].Notify(targetSrc, "You do not have enough money in your bank account", "error")
-            Framework[Config.Notify].Notify(realtorSrc, "Client does not have enough money in their bank account", "error")
+                Framework[Config.Notify].Notify(targetSrc, "Você não tem dinheiro suficiente na sua conta bancária.", "error")
+            Framework[Config.Notify].Notify(realtorSrc, "O cliente não tem dinheiro suficiente na conta bancária dele.", "error")
         return
     end
 
@@ -369,8 +369,8 @@ function Property:UpdateOwner(data)
         exports['qb-banking']:AddMoney(realtor.PlayerData.job.name, totalAfterCommission)
     else
         if prevPlayer ~= nil then
-            Framework[Config.Notify].Notify(prevPlayer.PlayerData.source, "Sold Property: " .. self.propertyData.street .. " " .. self.property_id, "success")
-            prevPlayer.Functions.AddMoney('bank', totalAfterCommission, "Sold Property: " .. self.propertyData.street .. " " .. self.property_id)
+            Framework[Config.Notify].Notify(prevPlayer.PlayerData.source, "Propriedade vendida: " .. self.propertyData.street .. " " .. self.property_id, "success")
+            prevPlayer.Functions.AddMoney('bank', totalAfterCommission, "Propriedade vendida: " .. self.propertyData.street .. " " .. self.property_id)
         elseif previousOwner then
             MySQL.Async.execute('UPDATE `players` SET `bank` = `bank` + @price WHERE `citizenid` = @citizenid', {
                 ['@citizenid'] = previousOwner,
@@ -396,8 +396,8 @@ function Property:UpdateOwner(data)
     
     Framework[Config.Logs].SendLog("**House Bought** by: **"..PlayerData.charinfo.firstname.." "..PlayerData.charinfo.lastname.."** for $"..self.propertyData.price.." from **"..realtor.PlayerData.charinfo.firstname.." "..realtor.PlayerData.charinfo.lastname.."** !")
 
-    Framework[Config.Notify].Notify(targetSrc, "You have bought the property for $"..self.propertyData.price, "success")
-    Framework[Config.Notify].Notify(realtorSrc, "Client has bought the property for $"..self.propertyData.price, "success")
+    Framework[Config.Notify].Notify(targetSrc, "Você comprou a propriedade por $"..self.propertyData.price, "success")
+    Framework[Config.Notify].Notify(realtorSrc, "O cliente comprou a propriedade por $"..self.propertyData.price, "success")
 end
 
 function Property:UpdateImgs(data)
@@ -513,9 +513,9 @@ function Property:UpdateApartment(data)
         ["@property_id"] = self.property_id
     })
 
-    Framework[Config.Notify].Notify(realtorSrc, "Changed Apartment of property with id: " .. self.property_id .." to ".. apartment, "success")
+    Framework[Config.Notify].Notify(realtorSrc, "Apartamento da propriedade com ID alterado: " .. self.property_id .." to ".. apartment, "success")
 
-    Framework[Config.Notify].Notify(targetSrc, "Changed Apartment to " .. apartment, "success")
+    Framework[Config.Notify].Notify(targetSrc, "Apartamento alterado para: " .. apartment, "success")
 
     Framework[Config.Logs].SendLog("**Changed Apartment** with id: " .. self.property_id .. " by: **" .. GetPlayerName(realtorSrc) .. "** for **" .. GetPlayerName(targetSrc) .."**")
 
@@ -549,7 +549,7 @@ function Property:DeleteProperty(data)
 
     TriggerClientEvent("ps-housing:client:removeProperty", -1, propertyid)
 
-    Framework[Config.Notify].Notify(realtorSrc, "Property with id: " .. propertyid .." has been removed.", "info")
+    Framework[Config.Notify].Notify(realtorSrc, "Propriedade com ID: " .. propertyid .." has been removed.", "info")
 
     Framework[Config.Logs].SendLog("**Property Deleted** with id: " .. propertyid .. " by: " .. realtorName)
 
@@ -662,7 +662,7 @@ RegisterNetEvent('ps-housing:server:raidProperty', function(property_id)
                 if confirmRaid == "confirm" then
                     property:StartRaid(src)
                     property:PlayerEnter(src)
-                    Framework[Config.Notify].Notify(src, "Raid started", "success")
+                    Framework[Config.Notify].Notify(src, "Invasão iniciada.", "success")
 
                     if Config.ConsumeRaidItem then
                         -- Remove the "stormram" item from the officer's inventory
@@ -695,19 +695,19 @@ RegisterNetEvent('ps-housing:server:raidProperty', function(property_id)
                     end
                 end
             else
-                Framework[Config.Notify].Notify(src, "Raid in progress", "success")
+                Framework[Config.Notify].Notify(src, "Invasão em andamento.", "success")
                 property:PlayerEnter(src)
             end
         else
-            Framework[Config.Notify].Notify(src, "You need a stormram to perform a raid", "error")
+            Framework[Config.Notify].Notify(src, "Você precisa de um item para realizar uma invasão.", "error")
         end
     else
         if not PoliceJobs[jobName] then
-            Framework[Config.Notify].Notify(src, "Only police officers are permitted to perform raids", "error")
+            Framework[Config.Notify].Notify(src, "Apenas policiais estão autorizados a realizar invasões.", "error")
         elseif not onDuty then
-            Framework[Config.Notify].Notify(src, "You must be onduty before performing a raid", "error")
+            Framework[Config.Notify].Notify(src, "Você deve estar de serviço antes de realizar uma invasão.", "error")
         elseif not gradeAllowed then
-            Framework[Config.Notify].Notify(src, "You must be a higher rank before performing a raid", "error")
+            Framework[Config.Notify].Notify(src, "Você precisa ser de um cargo superior antes de realizar uma invasão.", "error")
         end
     end
 end)
@@ -783,7 +783,7 @@ RegisterNetEvent("ps-housing:server:buyFurniture", function(property_id, items, 
     price = tonumber(price)
 
     if price > PlayerData.money.bank and price > PlayerData.money.cash then
-        Framework[Config.Notify].Notify(src, "You do not have enough money!", "error")
+        Framework[Config.Notify].Notify(src, "Você não tem dinheiro suficiente!", "error")
         return
     end
 
@@ -821,7 +821,7 @@ RegisterNetEvent("ps-housing:server:buyFurniture", function(property_id, items, 
 
     property:UpdateFurnitures(propertyData.furnitures, isGarden)
 
-    Framework[Config.Notify].Notify(src, "You bought furniture for $" .. price, "success")
+    Framework[Config.Notify].Notify(src, "Você comprou móveis por $" .. price, "success")
 
     Framework[Config.Logs].SendLog("**Player ".. GetPlayerName(src) .. "** bought furniture for **$" .. price .. "**")
 
@@ -895,7 +895,7 @@ RegisterNetEvent("ps-housing:server:addAccess", function(property_id, srcToAdd)
 
     if not property.propertyData.owner == citizenid then
         -- hacker ban or something
-        Framework[Config.Notify].Notify(src, "You are not the owner of this property!", "error")
+        Framework[Config.Notify].Notify(src, "Você não é o proprietário desta propriedade!", "error")
         return
     end
 
@@ -909,10 +909,10 @@ RegisterNetEvent("ps-housing:server:addAccess", function(property_id, srcToAdd)
         property:addMloDoorsAccess(targetCitizenid)
         property:UpdateHas_access(has_access)
 
-        Framework[Config.Notify].Notify(src, "You added access to " .. targetPlayer.charinfo.firstname .. " " .. targetPlayer.charinfo.lastname, "success")
-        Framework[Config.Notify].Notify(srcToAdd, "You got access to this property!", "success")
+        Framework[Config.Notify].Notify(src, "Você deu uma copia das chaves para " .. targetPlayer.charinfo.firstname .. " " .. targetPlayer.charinfo.lastname, "success")
+        Framework[Config.Notify].Notify(srcToAdd, "Você recebeu as chaves desta propriedade!", "success")
     else
-        Framework[Config.Notify].Notify(src, "This person already has access to this property!", "error")
+        Framework[Config.Notify].Notify(src, "Esta pessoa já tem acesso a esta propriedade!", "error")
     end
 end)
 
@@ -948,7 +948,7 @@ RegisterNetEvent("ps-housing:server:removeAccess", function(property_id, citizen
 
     if not property.propertyData.owner == citizenid then
         -- hacker ban or something
-        Framework[Config.Notify].Notify(src, "You are not the owner of this property!", "error")
+        Framework[Config.Notify].Notify(src, "Você não é o proprietário desta propriedade!", "error")
         return
     end
 
@@ -969,13 +969,13 @@ RegisterNetEvent("ps-housing:server:removeAccess", function(property_id, citizen
         local removePlayerData = playerToAdd.PlayerData
         local srcToRemove = removePlayerData.source
 
-        Framework[Config.Notify].Notify(src, "You removed access from " .. removePlayerData.charinfo.firstname .. " " .. removePlayerData.charinfo.lastname, "success")
+        Framework[Config.Notify].Notify(src, "Você removeu retirou as chaves de " .. removePlayerData.charinfo.firstname .. " " .. removePlayerData.charinfo.lastname, "success")
 
         if srcToRemove then
-            Framework[Config.Notify].Notify(srcToRemove, "You lost access to " .. (property.propertyData.street or property.propertyData.apartment) .. " " .. property.property_id, "error")
+            Framework[Config.Notify].Notify(srcToRemove, "O dono pegou a chave de volta da casa " .. (property.propertyData.street or property.propertyData.apartment) .. " " .. property.property_id, "error")
         end
     else
-        Framework[Config.Notify].Notify(src, "This person does not have access to this property!", "error")
+        Framework[Config.Notify].Notify(src, "Esta pessoa não tem as chaves desta propriedade!", "error")
     end
 end)
 

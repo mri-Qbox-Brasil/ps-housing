@@ -77,7 +77,7 @@ end
 function Property:CreateShell()
     local coords = self:GetDoorCoords()
 
-    coords = vec3(coords.x, coords.y, coords.z - 25.0)
+    coords = vec3(coords.x, coords.y, coords.z - 40.0)
     self.shell = Shell:CreatePropertyShell(self.propertyData.shell, coords)
 
     self.shellObj = self.shell.entity
@@ -183,10 +183,10 @@ function Property:RegisterPropertyEntrance()
         local data = lib.callback.await("ps-housing:cb:getPropertyInfo", false, self.property_id)
         if not data then return end
 
-        local content = "**Owner:** " .. data.owner .. "  \n" .. "**Description:** " .. data.description .. "  \n" .. "**Street:** " .. data.street .. "  \n" .. "**Region:** " .. data.region .. "  \n" .. "**Shell:** " .. data.shell .. "  \n" .. "**For Sale:** " .. (data.for_sale and "Yes" or "No")
+        local content = "**Proprietário:** " .. data.owner .. "  \n" .. "**Descrição:** " .. data.description .. "  \n" .. "**Rua:** " .. data.street .. "  \n" .. "**Região:** " .. data.region .. "  \n" .. "**Shell:** " .. data.shell .. "  \n" .. "**Á venda:** " .. (data.for_sale and "Sim" or "Não")
 
         if data.for_sale then
-            content = content .. "  \n" .. "**Price:** " .. data.price
+            content = content .. "  \n" .. "**Preço:** " .. data.price
         end
 
         lib.alertDialog({
@@ -304,7 +304,6 @@ function Property:UnregisterGarageZone()
     self.garageZone = nil
 end
 
-
 function Property:EnterShell()
     self = self
     local isMlo = self.propertyData.shell == 'mlo'
@@ -339,7 +338,6 @@ function Property:EnterShell()
         DoScreenFadeIn(250)
     end
 end
-
 
 function Property:LeaveShell()
     if not self.inProperty then return end
@@ -394,7 +392,7 @@ function Property:GiveMenus(garden)
     if self.owner or accessAndConfig then
         Framework[Config.Radial].AddRadialOption(
             "furniture_menu",
-            "Furniture Menu",
+            "Mobiliar Casa",
             "house",
             function()
                 Modeler:OpenMenu(self.property_id)
@@ -407,7 +405,7 @@ function Property:GiveMenus(garden)
     if self.owner and not garden then
         Framework[Config.Radial].AddRadialOption(
             "access_menu",
-            "Manage Property",
+            "Chaves da Casa",
             "key",
             function()
                 self:ManageAccessMenu()
@@ -432,7 +430,7 @@ function Property:ManageAccessMenu()
     if not self.inProperty then return end
 
     if not self.owner then
-        Framework[Config.Notify].Notify("Only the owner can do this.", "error")
+        Framework[Config.Notify].Notify("Apenas o proprietário pode fazer isso.", "error")
         return
     end
 
@@ -440,19 +438,19 @@ function Property:ManageAccessMenu()
     local id = "property-" .. self.property_id .. "-access"
     local menu = {
         id = id,
-        title = "Manage Access",
+        title = "Chaves da Casa",
         options = {},
     }
 
     menu.options[#menu.options + 1] = {
-        title = "Give Access",
+        title = "Dar Chaves",
         onSelect = function()
             self:GiveAccessMenu()
         end,
     }
 
     menu.options[#menu.options + 1] = {
-        title = "Revoke Access",
+        title = "Remover Chaves",
         onSelect = function()
             self:RevokeAccessMenu()
         end,
@@ -472,7 +470,7 @@ function Property:GiveAccessMenu()
     local id = "property-" .. self.property_id .. "-access-give"
     local menu = {
         id = id,
-        title = "Give Access",
+        title = "Dar Chaves",
         options = {},
     }
 
@@ -483,7 +481,7 @@ function Property:GiveAccessMenu()
             local v = players[i]
             menu.options[#menu.options + 1] = {
                 title = v.name,
-                description = "Give Access",
+                description = "Dar Chaves",
                 onSelect = function()
                     TriggerServerEvent("ps-housing:server:addAccess", self.property_id, v.src)
                 end,
@@ -493,7 +491,7 @@ function Property:GiveAccessMenu()
         lib.registerContext(menu)
         lib.showContext(id)
     else
-        Framework[Config.Notify].Notify("No one is in the property", "error")
+        Framework[Config.Notify].Notify("Ninguém está na propriedade.", "error")
     end
 end
 
@@ -505,7 +503,7 @@ function Property:RevokeAccessMenu()
     local id = "property-" .. self.property_id .. "-access-already"
     local alreadyAccessMenu = {
         id = id,
-        title = "Revoke Access",
+        title = "Remover Chaves",
         options = {},
     }
 
@@ -527,7 +525,7 @@ function Property:RevokeAccessMenu()
         lib.registerContext(alreadyAccessMenu)
         lib.showContext(id)
     else
-        Framework[Config.Notify].Notify("No one has access to this property", "error")
+        Framework[Config.Notify].Notify("Ninguém tem acesso a esta propriedade.", "error")
     end
 end
 
@@ -535,7 +533,7 @@ function Property:OpenDoorbellMenu()
     if not self.inProperty then return end
 
     if not next(self.doorbellPool) then
-        Framework[Config.Notify].Notify("No one is at the door", "error")
+        Framework[Config.Notify].Notify("Ninguém está na porta.", "error")
         return
     end
 

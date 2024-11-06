@@ -127,46 +127,46 @@ lib.callback.register('ps-housing:cb:confirmPurchase', function(amount, street, 
         cancel = true,
         labels = {
             confirm = "Purchase",
-            cancel = "Cancel"
+            cancel = "Não"
         }
     })
 end)
 
 lib.callback.register('ps-housing:cb:confirmRaid', function(street, id)
     return lib.alertDialog({
-        header = 'Raid',
-        content = 'Do you want to raid '..street..' ' .. id .. '?',
+        header = 'Invadir',
+        content = 'Você quer invadir? '..street..' ' .. id .. '?',
         centered = true,
         cancel = true,
         labels = {
-            confirm = "Raid",
-            cancel = "Cancel"
+            confirm = "Invadir",
+            cancel = "Não"
         }
     })
 end)
 
 lib.callback.register('ps-housing:cb:ringDoorbell', function()
     return lib.alertDialog({
-        header = 'Ring Doorbell',
-        content = 'You dont have a key for this property, would you like to ring the doorbell?',
+        header = 'Tocar a campainha.',
+        content = 'Você não tem a chave para esta propriedade, gostaria de tocar a campainha?',
         centered = true,
         cancel = true,
         labels = {
-            confirm = "Ring",
-            cancel = "Cancel"
+            confirm = "Tocar",
+            cancel = "Não"
         }
     })
 end)
 
 lib.callback.register('ps-housing:cb:showcase', function()
     return lib.alertDialog({
-        header = 'Showcase Property',
-        content = 'Do you want to showcase this property?',
+        header = 'Conhecer Propriedade',
+        content = 'Você realmente quer conhecer esta propriedade?',
         centered = true,
         cancel = true,
         labels = {
-            confirm = "Yes",
-            cancel = "Cancel"
+            confirm = "Sim",
+            cancel = "Não"
         }
     })
 end)
