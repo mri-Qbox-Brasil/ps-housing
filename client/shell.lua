@@ -1,6 +1,5 @@
 Shells = {} 
 
-
 Shell = {
     entity = nil,
     hash = nil,
@@ -8,11 +7,9 @@ Shell = {
     rotation = nil,
     shellData = nil,
     oldCoord = nil,
-
     exitTarget = nil,
 }
 Shell.__index = Shell
-
 
 function Shell:SpawnShell(shellHash, position, rotation)
     lib.requestModel(shellHash)
@@ -38,7 +35,6 @@ function Shell:DespawnShell()
     self = nil
 end
 
-
 function Shell:CreatePropertyShell(shellName, position, rotation)
     local self = setmetatable({}, Shell)
 
@@ -49,11 +45,8 @@ function Shell:CreatePropertyShell(shellName, position, rotation)
 
     self.entity = self:SpawnShell(self.hash, self.position, self.rotation)
 
-    
     return self
 end
-
-
 -- example of how to use
 -- exports["ps-housing"]:CreateTempShell("Modern Hotel", GetEntityCoords(PlayerPedId()), GetEntityRotation(PlayerPedId()), function()
 --     Framework[Config.Notify].Notify("You left the shell", "error")
@@ -68,14 +61,12 @@ function Shell:CreateTempShell(shellName, position, rotation, leaveCb)
     self.position = position
     self.rotation = rotation
     
-
     DoScreenFadeOut(250)
     Wait(250)
 
     self.oldCoord = GetEntityCoords(PlayerPedId())
 
     self.entity = self:SpawnShell(self.hash, self.position, self.rotation)
-
 
     local doorOffset = self.shellData.doorOffset
     local offset = GetOffsetFromEntityInWorldCoords(self.entity, doorOffset.x, doorOffset.y, doorOffset.z)
@@ -102,7 +93,6 @@ function Shell:CreateTempShell(shellName, position, rotation, leaveCb)
         Wait(250)
         DoScreenFadeIn(250)
     end
-
 
     self.exitTarget = Framework[Config.Target].AddDoorZoneInsideTempShell(coords, size, heading, leave)
 

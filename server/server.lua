@@ -138,7 +138,7 @@ function RegisterProperty(propertyData, preventEnter, source)
             Debug("Player: " .. propertyData.owner .. " is creating a new character!")
         end
 
-        Framework[Config.Notify].Notify(src, "Open radial menu for furniture menu and place down your stash and clothing locker.", "info")
+        Framework[Config.Notify].Notify(src, "Abra o menu radial para o menu de Mobiliar Casa e coloque seu Baú e Guarda-Roupas.", "info")
 
         -- This will create the stash for the apartment and migrate the items from the old apartment stash if applicable
         if GetResourceState('qb-inventory') == 'started' then
@@ -296,8 +296,8 @@ AddEventHandler("ps-housing:server:addTenantToApartment", function (data)
         local propertyData = v.propertyData
         if propertyData.owner == targetCitizenid then
             if propertyData.apartment == apartment then
-                Framework[Config.Notify].Notify(targetSrc, "You are already in this apartment", "error")
-                Framework[Config.Notify].Notify(targetSrc, "This person is already in this apartment", "error")
+                Framework[Config.Notify].Notify(targetSrc, "Você já está neste apartamento.", "error")
+                Framework[Config.Notify].Notify(targetSrc, "Esta pessoa já está neste apartamento.", "error")
 
                 return
             elseif propertyData.apartment and #propertyData.apartment > 1 then
@@ -325,8 +325,8 @@ AddEventHandler("ps-housing:server:addTenantToApartment", function (data)
 
         Framework[Config.Logs].SendLog("Creating new apartment for " .. GetPlayerName(targetSrc) .. " in " .. newApartment.label)
 
-        Framework[Config.Notify].Notify(targetSrc, "Your apartment is now at "..apartment, "success")
-        Framework[Config.Notify].Notify(realtorSrc, "You have added ".. targetToAdd.charinfo.firstname .. " " .. targetToAdd.charinfo.lastname .. " to apartment "..apartment, "success")
+        Framework[Config.Notify].Notify(targetSrc, "Seu apartamento agora está em "..apartment, "success")
+        Framework[Config.Notify].Notify(realtorSrc, "Você adicionou ".. targetToAdd.charinfo.firstname .. " " .. targetToAdd.charinfo.lastname .. " to apartment "..apartment, "success")
 
         RegisterProperty(propertyData, true)
 
@@ -342,8 +342,8 @@ AddEventHandler("ps-housing:server:addTenantToApartment", function (data)
     local targetToAdd = QBCore.Functions.GetPlayerByCitizenId(citizenid)
     local targetPlayer = targetToAdd.PlayerData
 
-    Framework[Config.Notify].Notify(targetSrc, "Your apartment is now at "..apartment, "success")
-    Framework[Config.Notify].Notify(realtorSrc, "You have added ".. targetPlayer.charinfo.firstname .. " " .. targetPlayer.charinfo.lastname .. " to apartment "..apartment, "success")
+    Framework[Config.Notify].Notify(targetSrc, "Seu apartamento agora está em "..apartment, "success")
+    Framework[Config.Notify].Notify(realtorSrc, "Você adicionou ".. targetPlayer.charinfo.firstname .. " " .. targetPlayer.charinfo.lastname .. " to apartment "..apartment, "success")
 end)
 
 exports('IsOwner', function(src, property_id)
@@ -357,7 +357,7 @@ end)
 function GetCitizenid(targetSrc, callerSrc)
     local Player = QBCore.Functions.GetPlayer(tonumber(targetSrc))
     if not Player then
-        Framework[Config.Notify].Notify(callerSrc, "Player not found.", "error")
+        Framework[Config.Notify].Notify(callerSrc, "Cidadão não encontrado.", "error")
         return
     end
     local PlayerData = Player.PlayerData
