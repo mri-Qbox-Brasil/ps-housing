@@ -82,7 +82,7 @@ Config.Apartments = {
                 label = "Outside",
             },
         },
-        shell = "Apartment Furnished",
+        shell = "Cabana 01",
     },
 
     ["South Rockford Drive"] = {
@@ -94,7 +94,7 @@ Config.Apartments = {
                 label = "Outside",
             },
         },
-        shell = "Apartment Furnished",
+        shell = "Cabana 01",
     },
 
     ['Morningwood Blvd'] = {
@@ -106,7 +106,7 @@ Config.Apartments = {
                 label = "Outside",
             },
         },
-        shell = "Apartment Furnished",
+        shell = "Cabana 01",
     },
 
     ['Tinsel Towers'] = {
@@ -118,7 +118,7 @@ Config.Apartments = {
                 label = "Outside",
             },
         },
-        shell = "Apartment Furnished",
+        shell = "Cabana 01",
     },
 
     ['Fantastic Plaza'] = {
@@ -130,7 +130,7 @@ Config.Apartments = {
                 label = "Outside",
             },
         },
-        shell = "Apartment Furnished",
+        shell = "Cabana 01",
     },
 
     ---ipl
@@ -158,7 +158,7 @@ Config.Apartments = {
             vector3(-807.29, 331.75, 219.5),
             vector3(-799.8, 321.23, 219.5)
         },
-        shell = "mlo",
+        shell = "Cabana 01",
     },
 }
 
