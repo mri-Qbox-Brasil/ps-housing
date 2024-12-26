@@ -150,7 +150,7 @@ Framework.qb = {
         }, {
             options = {
                 {
-                    label = "Enter Apartment",
+                    label = "Entrar no apartamento",
                     action = enter,
                     icon = "fas fa-door-open",
                     canInteract = function()
@@ -159,12 +159,12 @@ Framework.qb = {
                     end,
                 },
                 {
-                    label = "See all apartments",
+                    label = "Ver todos apartamentos",
                     icon = "fas fa-circle-info",
                     action = seeAll,
                 },
                 {
-                    label = "Raid Apartment",
+                    label = "Invadir apartamento",
                     action = seeAllToRaid,
                     icon = "fas fa-building-shield",
                     canInteract = function()
@@ -381,7 +381,7 @@ Framework.ox = {
             debug = Config.DebugMode,
             options = {
                 {
-                    label = "Enter Apartment",
+                    label = "Entrar no apartamento",
                     onSelect = enter,
                     icon = "fas fa-door-open",
                     canInteract = function()
@@ -390,12 +390,12 @@ Framework.ox = {
                     end,
                 },
                 {
-                    label = "See all apartments",
+                    label = "Ver todos apartamentos",
                     onSelect = seeAll,
                     icon = "fas fa-circle-info",
                 },
                 {
-                    label = "Raid Apartment",
+                    label = "Invadir apartamento",
                     onSelect = seeAllToRaid,
                     icon = "fas fa-building-shield",
                     canInteract = function()
