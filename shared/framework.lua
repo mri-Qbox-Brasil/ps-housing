@@ -31,6 +31,7 @@ if IsDuplicityVersion() then
     end
 
     function Framework.qb.RegisterInventory(stash, label, stashConfig)
+        exports.ox_inventory:RegisterStash(stash, label, stashConfig.slots, stashConfig.maxweight, nil)
         -- Used for ox_inventory compat
     end
 
@@ -101,7 +102,7 @@ Framework.qb = {
                         end,
                     },
                     {
-                        label = "Informações do imovel",
+                        label = "Informações do imóvel",
                         icon = "fas fa-circle-info",
                         action = showData,
                         canInteract = function()
@@ -112,7 +113,7 @@ Framework.qb = {
                         end,
                     },
                     {
-                        label = "Ring Doorbell",
+                        label = "Tocar campainha",
                         icon = "fas fa-bell",
                         action = enter,
                         canInteract = function()
@@ -121,7 +122,7 @@ Framework.qb = {
                         end,
                     },
                     {
-                        label = "Raid Property",
+                        label = "Invadir",
                         icon = "fas fa-building-shield",
                         action = raid,
                         canInteract = function()
@@ -228,7 +229,7 @@ Framework.qb = {
             {
                 options = {
                     {
-                        label = "Leave",
+                        label = "Sair",
                         action = leave,
                         icon = "fas fa-right-from-bracket",
                     },
@@ -335,7 +336,7 @@ Framework.ox = {
                     end,
                 },
                 {
-                    label = "Informações do imovel",
+                    label = "Informações do imóvel",
                     icon = "fas fa-circle-info",
                     onSelect = showData,
                     canInteract = function()
@@ -346,7 +347,7 @@ Framework.ox = {
                     end,
                 },
                 {
-                    label = "Ring Doorbell",
+                    label = "Tocar campainha",
                     icon = "fas fa-bell",
                     onSelect = enter,
                     canInteract = function()
@@ -355,7 +356,7 @@ Framework.ox = {
                     end,
                 },
                 {
-                    label = "Raid Property",
+                    label = "Invadir",
                     icon = "fas fa-building-shield",
                     onSelect = raid,
                     canInteract = function()
@@ -447,7 +448,7 @@ Framework.ox = {
             options = {
                 {
                     name = "leave",
-                    label = "Leave",
+                    label = "Sair",
                     onSelect = leave,
                     icon = "fas fa-right-from-bracket",
                 },
