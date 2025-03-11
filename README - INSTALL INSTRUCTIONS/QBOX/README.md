@@ -64,14 +64,12 @@ local function spawnLastLocation()
     }) end)
 
     local insideMeta = QBX.PlayerData.metadata.inside
-    if insideMeta.propertyId then
-        TriggerServerEvent('ps-housing:server:enterProperty', tostring(insideMeta.propertyId))
+    if insideMeta.property_id then
+        TriggerServerEvent('ps-housing:server:enterProperty', tostring(insideMeta.property_id))
     end
 
     TriggerServerEvent('QBCore:Server:OnPlayerLoaded')
     TriggerEvent('QBCore:Client:OnPlayerLoaded')
-    -- TriggerServerEvent('qb-houses:server:SetInsideMeta', 0, false)
-    -- TriggerServerEvent('qb-apartments:server:SetInsideMeta', 0, 0, false)
 
     while not IsScreenFadedIn() do
         Wait(0)
@@ -91,20 +89,20 @@ Find `inputHandler` in client/main.lua and replace with:
 local function inputHandler()
     while DoesCamExist(previewCam) do
         if IsControlJustReleased(0, 188) then
-            previousButtonID = currentButtonID
-            currentButtonID -= 1
+            previousButtonId = currentButtonId
+            currentButtonId -= 1
 
-            if currentButtonID < 1 then
-                currentButtonID = #spawns
+            if currentButtonId < 1 then
+                currentButtonId = #spawns
             end
 
             updateScaleform()
         elseif IsControlJustReleased(0, 187) then
-            previousButtonID = currentButtonID
-            currentButtonID += 1
+            previousButtonId = currentButtonId
+            currentButtonId += 1
 
-            if currentButtonID > #spawns then
-                currentButtonID = 1
+            if currentButtonId > #spawns then
+                currentButtonId = 1
             end
 
             updateScaleform()
@@ -119,9 +117,9 @@ local function inputHandler()
             TriggerEvent('QBCore:Client:OnPlayerLoaded')
             FreezeEntityPosition(cache.ped, false)
 
-            local spawnData = spawns[currentButtonID]
-            if spawnData.propertyId then
-                TriggerServerEvent('ps-housing:server:enterProperty', tostring(spawnData.propertyId), 'spawn')
+            local spawnData = spawns[currentButtonId]
+            if spawnData.property_id then
+                TriggerServerEvent('ps-housing:server:enterProperty', tostring(spawnData.property_id), 'spawn')
             else
                 SetEntityCoords(cache.ped, spawnData.coords.x, spawnData.coords.y, spawnData.coords.z, false, false, false, false)
                 SetEntityHeading(cache.ped, spawnData.coords.w or 0.0)
@@ -138,7 +136,7 @@ local function inputHandler()
     stopCamera()
 end
 ```
-Find `qbx_spawn:server:getLastLocation` in client/main.lua and replace with: 
+Find `qbx_spawn:server:getLastLocation` in server/main.lua and replace with: 
 
 ```lua
 lib.callback.register('qbx_spawn:server:getLastLocation', function(source)
@@ -147,10 +145,10 @@ lib.callback.register('qbx_spawn:server:getLastLocation', function(source)
 end)
 ```
 
-Find `qbx_spawn:server:getHouses` in server/main.lua and replace with: 
+Find `qbx_spawn:server:getProperties` in server/main.lua and replace with: 
 
 ```lua
-lib.callback.register('qbx_spawn:server:getHouses', function(source)
+lib.callback.register('qbx_spawn:server:getProperties', function(source)
     local player = exports.qbx_core:GetPlayer(source)
     local houseData = {}
 
@@ -161,7 +159,7 @@ lib.callback.register('qbx_spawn:server:getHouses', function(source)
     for i = 1, #houses do
         local house = houses[i]
             if not house.apartment then
-            local door = exports['ps-housing']:getMainDoor(house.property_id, 1)
+            local door = exports['ps-housing']:getMainDoor(house.property_id, 1, true)
             local coords = door.objCoords or door.coords or door.doors[1] and door.doors[1].coords or door.doors[1].objCoords
             houseData[#houseData + 1] = {
                 label = house.street,
@@ -249,11 +247,11 @@ lua54 'yes'
 use_experimental_fxv2_oal 'true'
 ```
 
-Add the below code block in `apartmentselect.lua`
+Add the below code block in `client/apartmentselect.lua`
 
 ```lua
 AddEventHandler('ps-housing:setApartments', function(data)
-    ApartmentOptions = data
+    apartmentOptions = data
 end)
 ```
 
@@ -263,17 +261,17 @@ Find `InputHandler` in apartmentselect.lua function and replace with:
 local function InputHandler()
     while true do
         if IsControlJustReleased(0, 188) then
-            currentButtonID -= 1
-            if currentButtonID < 1 then currentButtonID = #ApartmentOptions end
+            currentButtonId -= 1
+            if currentButtonId < 1 then currentButtonId = #sharedConfig.apartmentOptions end
             SetupScaleform()
         elseif IsControlJustReleased(0, 187) then
-            currentButtonID += 1
-            if currentButtonID > #ApartmentOptions then currentButtonID = 1 end
+            currentButtonId += 1
+            if currentButtonId > #sharedConfig.apartmentOptions then currentButtonId = 1 end
             SetupScaleform()
         elseif IsControlJustReleased(0, 191) then
             local alert = lib.alertDialog({
                 header = locale('alert.apartment_selection'),
-                content = string.format(locale('alert.are_you_sure'), ApartmentOptions[currentButtonID].label),
+                content = string.format(locale('alert.are_you_sure'), sharedConfig.apartmentOptions[currentButtonId].label),
                 centered = true,
                 cancel = true
             })
@@ -281,10 +279,10 @@ local function InputHandler()
                 DoScreenFadeOut(500)
                 while not IsScreenFadedOut() do Wait(0) end
                 FreezeEntityPosition(cache.ped, false)
-                SetEntityCoords(cache.ped, ApartmentOptions[currentButtonID].enter.x, ApartmentOptions[currentButtonID].enter.y, ApartmentOptions[currentButtonID].enter.z - 2.0, false, false, false, false)
+                SetEntityCoords(cache.ped, sharedConfig.apartmentOptions[currentButtonId].enter.x, sharedConfig.apartmentOptions[currentButtonId].enter.y, sharedConfig.apartmentOptions[currentButtonId].enter.z - 2.0, false, false, false, false)
                 Wait(0)
-                -- TriggerServerEvent('qbx_properties:server:apartmentSelect', currentButtonID)
-                TriggerServerEvent("ps-housing:server:createNewApartment", ApartmentOptions[currentButtonID].label)
+                -- TriggerServerEvent('qbx_properties:server:apartmentSelect', currentButtonId)
+                TriggerServerEvent("ps-housing:server:createNewApartment", sharedConfig.apartmentOptions[currentButtonId].label)
                 Wait(1000) -- Wait for player to spawn correctly so clothing menu can load in nice
                 TriggerServerEvent('QBCore:Server:OnPlayerLoaded')
                 TriggerEvent('QBCore:Client:OnPlayerLoaded')
@@ -299,7 +297,7 @@ end
 
 head to qbx_properties/config/shared.lua and replace this table with this
 ```lua
-ApartmentOptions = {
+apartmentOptions = {
     {
         interior = 'DellPerroHeightsApt4',
         label = 'Fantastic Plaza',
