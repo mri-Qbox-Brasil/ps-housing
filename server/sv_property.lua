@@ -41,7 +41,6 @@ function Property:PlayerEnter(src)
     if not isMlo then
         TriggerClientEvent('qb-weathersync:client:DisableSync', src)
     end
-    print(src, self.property_id)
     TriggerClientEvent('ps-housing:client:enterProperty', src, self.property_id, isMlo, self.propertyData)
 
     if next(self.playersDoorbell) then
@@ -340,7 +339,7 @@ function Property:UpdateOwner(data)
         return
     end
 
-    --add callback 
+    --add callback
     local targetAllow = lib.callback.await("ps-housing:cb:confirmPurchase", targetSrc, self.propertyData.price, self.propertyData.street, self.propertyData.property_id)
 
     if targetAllow ~= "confirm" then
@@ -378,7 +377,7 @@ function Property:UpdateOwner(data)
             })
         end
     end
-    
+
     realtor.Functions.AddMoney('bank', commission, "Commission from Property: " .. self.propertyData.street .. " " .. self.property_id)
 
     self.propertyData.owner = citizenid
@@ -393,7 +392,7 @@ function Property:UpdateOwner(data)
 
     TriggerClientEvent("ps-housing:client:updateProperty", -1, "UpdateOwner", self.property_id, citizenid)
     TriggerClientEvent("ps-housing:client:updateProperty", -1, "UpdateForSale", self.property_id, 0)
-    
+
     Framework[Config.Logs].SendLog("**House Bought** by: **"..PlayerData.charinfo.firstname.." "..PlayerData.charinfo.lastname.."** for $"..self.propertyData.price.." from **"..realtor.PlayerData.charinfo.firstname.." "..realtor.PlayerData.charinfo.lastname.."** !")
 
     Framework[Config.Notify].Notify(targetSrc, "Você comprou a propriedade por $"..self.propertyData.price, "success")
@@ -476,7 +475,7 @@ function Property:UpdateGarage(data)
 
     local newData = {}
 
-    if data ~= nil then 
+    if data ~= nil then
         newData = {
             x = math.floor(garage.x * 10000) / 10000,
             y = math.floor(garage.y * 10000) / 10000,
@@ -493,7 +492,7 @@ function Property:UpdateGarage(data)
         ["@garageCoords"] = json.encode(newData),
         ["@property_id"] = self.property_id
     })
-    
+
     TriggerClientEvent("ps-housing:client:updateProperty", -1, "UpdateGarage", self.property_id, newData)
 
     Framework[Config.Logs].SendLog("**Changed Garage** of property with id: " .. self.property_id .. " by: " .. GetPlayerName(realtorSrc))
@@ -575,7 +574,7 @@ RegisterNetEvent('ps-housing:server:enterGarden', function (property_id)
     property.playersInGarden[tostring(src)] = true
 end)
 
-RegisterNetEvent('ps-housing:server:enterProperty', function (property_id, spawn,isanmlo)
+RegisterNetEvent('ps-housing:server:enterProperty', function (property_id, spawn, isanmlo)
     local src = source
     Debug("Player is trying to enter property", property_id)
 
@@ -587,9 +586,11 @@ RegisterNetEvent('ps-housing:server:enterProperty', function (property_id, spawn
 
     local citizenid = GetCitizenid(src)
 
-    if property:CheckForAccess(citizenid) and not isanmlo then
+    Debug("Player has access to property: ", property:CheckForAccess(citizenid))
+    Debug("is an mlo: ", isanmlo)
+    if property:CheckForAccess(citizenid) then
         Debug("Player has access to property")
-        if spawn == 'spawn' then
+        if spawn == 'spawn' and not isanmlo then
             TriggerClientEvent("ps-housing:client:enterProperty", src, property_id, spawn)
         else
             property:PlayerEnter(src)
@@ -597,7 +598,7 @@ RegisterNetEvent('ps-housing:server:enterProperty', function (property_id, spawn
         Debug("Player entered property")
         return
     else
-        property:PlayerEnter(src)
+        Debug("Player does not have access to property or is an mlo")
     end
 
     if not isanmlo then
@@ -615,9 +616,9 @@ RegisterNetEvent("ps-housing:server:showcaseProperty", function(property_id)
 
     local property = Property.Get(property_id)
 
-    if not property then 
+    if not property then
         Debug("Properties returned", json.encode(PropertiesTable, {indent = true}))
-        return 
+        return
     end
 
 
@@ -641,9 +642,9 @@ RegisterNetEvent('ps-housing:server:raidProperty', function(property_id)
 
     local property = Property.Get(property_id)
 
-    if not property then 
+    if not property then
         Debug("Properties returned", json.encode(PropertiesTable, {indent = true}))
-        return 
+        return
     end
 
     local Player = QBCore.Functions.GetPlayer(src)
@@ -757,16 +758,16 @@ RegisterNetEvent('ps-housing:server:leaveProperty', function (property_id)
 end)
 
 -- When player presses doorbell, owner can let them in and this is what is triggered
-RegisterNetEvent("ps-housing:server:doorbellAnswer", function (data) 
+RegisterNetEvent("ps-housing:server:doorbellAnswer", function (data)
     local src = source
     local targetSrc = data.targetSrc
 
     local property = Property.Get(data.property_id)
     if not property then return end
-    
+
     if not property.playersInside[tostring(src)] then return end
     property:RemoveFromDoorbellPool(targetSrc)
-    
+
     property:PlayerEnter(targetSrc)
 end)
 
@@ -815,7 +816,7 @@ RegisterNetEvent("ps-housing:server:buyFurniture", function(property_id, items, 
             local stashConfig = Config.Shells[propertyData.shell].stash
             if not propertyData.apartment then
                 Framework[Config.Inventory].RegisterInventory(firstStorage and stashName or stashName .. item.id, 'Property: ' .. propertyData.street .. '#' .. propertyData.property_id, stashConfig)
-            else 
+            else
                Framework[Config.Inventory].RegisterInventory(firstStorage and stashName or stashName .. item.id, 'Property: ' .. propertyData.apartment .. '#' .. propertyData.property_id, stashConfig)
             end
         end
@@ -847,10 +848,10 @@ end)
 
 RegisterNetEvent("ps-housing:server:removeFurniture", function(property_id, itemid)
     local src = source
-    
+
     local property = Property.Get(property_id)
     if not property then return end
-    
+
     local citizenid = GetCitizenid(src)
     if not property:CheckForAccess(citizenid) then return end
 
@@ -866,7 +867,7 @@ RegisterNetEvent("ps-housing:server:removeFurniture", function(property_id, item
     property:UpdateFurnitures(currentFurnitures)
 end)
 
--- @@ VERY BAD 
+-- @@ VERY BAD
 -- I think its not bad anymore but if u got a better idea lmk
 RegisterNetEvent("ps-housing:server:updateFurniture", function(property_id, item)
     local src = source
@@ -964,7 +965,7 @@ RegisterNetEvent("ps-housing:server:removeAccess", function(property_id, citizen
                 table.remove(has_access, i)
                 break
             end
-        end 
+        end
 
         property:removeMloDoorsAccess(citizenidToRemove)
         property:UpdateHas_access(has_access)
@@ -987,7 +988,7 @@ lib.callback.register("ps-housing:cb:getPlayersWithAccess", function (source, pr
     local src = source
     local citizenidSrc = GetCitizenid(src)
     local property = Property.Get(property_id)
-    
+
     if not property then return end
     if property.propertyData.owner ~= citizenidSrc then return end
 
@@ -1014,7 +1015,7 @@ lib.callback.register('ps-housing:cb:getPropertyInfo', function (source, propert
 
     if not property then return end
 
-    
+
     local PlayerData = GetPlayerData(src)
     local job = PlayerData.job
     local jobName = job.name
