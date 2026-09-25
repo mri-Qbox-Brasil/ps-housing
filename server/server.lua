@@ -296,7 +296,7 @@ end)
 
 -- we show the character creator if they spawn without starting appartment and doesn't have skin set
 RegisterNetEvent("QBCore:Server:OnPlayerLoaded", function()
-    if Config.StartingApartment then return end
+    if Config.StartingApartment or not Config.ShowCustomizerWhenNoStartingApartment then return end
 
     local src = source
     local citizenid = GetCitizenid(src)
