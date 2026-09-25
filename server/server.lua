@@ -436,56 +436,6 @@ exports('IsOwner', function(src, property_id)
     return property:CheckForAccess(citizenid)
 end)
 
--- Spawn API: spawn selectors use these instead of reading the properties table or player metadata
-
----@param src number
----@return {propertyId: string, label: string, coords: vector3}[]
-exports('getSpawnProperties', function(src)
-    local Player = GetPlayer(src)
-    if not Player then return {} end
-
-    local citizenid = Player.PlayerData.citizenid
-    local spawns = {}
-
-    for id, property in pairs(PropertiesTable) do
-        local data = property.propertyData
-        if data.owner == citizenid and not data.apartment then
-            local door = getMainDoor(id, 1, data.shell ~= 'mlo')
-            local coords = door and (door.objCoords or door.coords
-                or (door.doors and door.doors[1] and (door.doors[1].coords or door.doors[1].objCoords)))
-
-            if coords then
-                spawns[#spawns + 1] = { propertyId = id, label = data.street, coords = coords }
-            end
-        end
-    end
-
-    return spawns
-end)
-
----@param src number
----@return string? propertyId property the player was inside when they logged out
-exports('getInsideProperty', function(src)
-    local Player = GetPlayer(src)
-    local inside = Player and Player.PlayerData.metadata.inside
-    return inside and inside.property_id or nil
-end)
-
----Enters the property the same way walking through the door does (bucket, inside metadata, furniture)
----@param src number
----@param propertyId string
----@return boolean
-exports('spawnInProperty', function(src, propertyId)
-    local property = Property.Get(propertyId)
-    if not property then return false end
-
-    local citizenid = GetCitizenid(src, src)
-    if not citizenid or not property:CheckForAccess(citizenid) then return false end
-
-    property:PlayerEnter(src)
-    return true
-end)
-
 function GetCitizenid(targetSrc, callerSrc)
     local Player = QBCore.Functions.GetPlayer(tonumber(targetSrc))
     if not Player then
