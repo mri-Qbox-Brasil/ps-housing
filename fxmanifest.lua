@@ -13,6 +13,7 @@ ui_page 'html/index.html'
 
 dependency {
   'fivem-freecam',
+  'ox_doorlock',
 }
 
 shared_script {
