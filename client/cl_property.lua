@@ -705,7 +705,7 @@ function Property:RemoveBlip()
     self.blip = nil
 end
 
-function Property:RemoveProperty(doors)
+function Property:RemoveProperty()
     if Config.Target == "ox" then
         Framework[Config.Target].RemoveTargetZone(self.entranceTarget)
     else
@@ -736,7 +736,6 @@ function Property:RemoveProperty(doors)
     self:RemoveBlip()
     self:LeaveShell()
     self:UnregisterGarageZone()
-    if doors then TriggerEvent('ps-housing:client:DeleteOxDoors', self.property_id) end
     --@@ comeback to this
     -- Think it works now
     if self.propertyData.apartment then
@@ -982,11 +981,6 @@ RegisterNetEvent("ps-housing:client:createOxDoors", function(data)
 
         TriggerServerEvent('ox_doorlock:editDoorlock', false, payload)
     end
-end)
-
-RegisterNetEvent("ps-housing:client:DeleteOxDoors", function(propertyid)
-    local name = ('ps_mloproperty%s'):format(propertyid)
-    TriggerServerEvent('ox_doorlock:RemoveDoorlock', name)
 end)
 
 AddEventHandler("ps-housing:client:openManagePropertyAccessMenu", function(data)

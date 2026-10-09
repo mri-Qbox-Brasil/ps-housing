@@ -536,15 +536,14 @@ function Property:DeleteProperty(data)
         end
     end)
 
-    local doorPrefix = ('ps_mloproperty%s_'):format(propertyid)
-
-    MySQL.Async.execute("DELETE FROM ox_doorlock WHERE name LIKE @doorPrefix", {
-        ["@doorPrefix"] = doorPrefix .. '%'
-    }, function (rowsChanged)
-        if rowsChanged > 0 then
-            Debug("Deleted doorlock entries for property with id: " .. propertyid)
+    if DoorResource == 'ox' and self.propertyData.shell == 'mlo' then
+        local ox_doorlock = exports.ox_doorlock
+        for i = 1, self.propertyData.door_data.count do
+            -- An admin may have already removed the door in the doorlock panel.
+            local door = ox_doorlock:getDoorFromName(('ps_mloproperty%s_%s'):format(propertyid, i))
+            if door then ox_doorlock:removeDoor(door.id) end
         end
-    end)
+    end
 
     TriggerClientEvent("ps-housing:client:removeProperty", -1, propertyid)
 

@@ -11,7 +11,7 @@ RegisterNetEvent('ps-housing:client:removeProperty', function (property_id)
 	local property = Property.Get(property_id)
 
 	if property then
-		property:RemoveProperty(true)
+		property:RemoveProperty()
 	end
 
 	PropertiesTable[property_id] = nil
