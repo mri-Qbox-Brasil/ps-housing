@@ -42,6 +42,23 @@ end
 AddEventHandler("QBCore:Client:OnPlayerLoaded", InitialiseProperties)
 RegisterNetEvent('ps-housing:client:initialiseProperties', InitialiseProperties)
 
+-- After an `ensure` with players online, the server's initialiseProperties event can arrive before this
+-- script is running, and the doors are left without "Entrar". A loaded player asks for the list himself.
+AddEventHandler("onClientResourceStart", function(resourceName)
+    if resourceName ~= GetCurrentResourceName() or not LocalPlayer.state.isLoggedIn then return end
+    CreateThread(function()
+        for _ = 1, 20 do
+            if loaded then return end
+            local properties = lib.callback.await('ps-housing:server:requestProperties')
+            if properties and next(properties) then
+                InitialiseProperties(properties)
+                return
+            end
+            Wait(1000)
+        end
+    end)
+end)
+
 -- AddEventHandler("onResourceStart", function(resourceName) -- Used for when the resource is restarted while in game
 -- 	if (GetCurrentResourceName() == resourceName) then
 --         InitialiseProperties()
